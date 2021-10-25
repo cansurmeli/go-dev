@@ -7,8 +7,9 @@ WORKDIR /tmp
 RUN git clone https://github.com/vim/vim.git && cd vim && make && make install
 
 WORKDIR /go/src
-COPY .vim /root/.vim
 COPY ./Godeps /go/src
+
+RUN git clone https://gitlab.cansurmeli.com/can/vim-config.git /root/.vim
 
 RUN wget https://raw.githubusercontent.com/pote/gpm/v1.4.0/bin/gpm && chmod +x gpm && mv gpm /usr/local/bin
 RUN gpm install
