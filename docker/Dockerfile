@@ -13,8 +13,7 @@ RUN apt-get install -y apt-utils\
                        time\
                        zsh\
                        make\
-                       python3.9\
-                       python39-devel
+                       python3.9
 
 # Grab Vim fron source instead and compile it with Python3 support
 RUN git clone https://github.com/vim/vim.git && cd vim && ./configure --enable-python3interp=yes --with-python3-config-dir=/usr/bin/python3.9/config-* && make && make install
@@ -24,7 +23,7 @@ RUN git clone https://github.com/vim/vim.git && cd vim && ./configure --enable-p
 ###############
 RUN useradd go
 
-RUN usermod -aG wheel go
+RUN usermod -aG sudo go
 
 USER go
 
