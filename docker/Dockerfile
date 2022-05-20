@@ -29,26 +29,6 @@ USER go
 
 WORKDIR /home/go
 
-############
-############
-
-WORKDIR /go/src
-COPY ./Godeps /go/src
-
-RUN git clone https://gitlab.cansurmeli.com/can/vim-config.git /root/.vim
-
-RUN wget https://raw.githubusercontent.com/pote/gpm/v1.4.0/bin/gpm && chmod +x gpm && mv gpm /usr/local/bin
-RUN gpm install
-RUN cp -r ./github.com /github.com  # backup packages to root to prevent volume mount removing it
-
-# Install Go binaries that are utilised by the vim-go plugin:
-# https://github.com/fatih/vim-go/blob/master/plugin/go.vim#L9
-#
-# We don't manually install them, we let vim-go handle that
-# We use vim's `execute` command to pipe commands
-# This helps avoid "Press ENTER or type command to continue"
-RUN time vim -c "execute 'silent GoUpdateBinaries' | execute 'quit'"
-
 #################
 # SET-UP PREZTO #
 #################
@@ -62,9 +42,9 @@ COPY init_zprezto.sh .
 
 RUN chmod +x init_zprezto.sh
 
-USER python
+USER go
 
-RUN rm /home/python/.zshrc
+RUN rm /home/go/.zshrc
 
 RUN ./init_zprezto.sh
 
@@ -78,10 +58,29 @@ RUN ./init_zprezto.sh
 # solves another issue with Vim colorscheme `onedark`.
 ENV TERM="xterm-256color"
 
-#########
-# OTHER #
-#########
+#############
+# SETUP VIM #
+#############
 # Grab my Vim config
 RUN git clone --recursive https://gitlab.cansurmeli.com/can/vim-config /home/python/.vim
+
+####################
+# GO RELATED STUFF #
+####################
+
+# WORKDIR /go/src
+# COPY ./Godeps /go/src
+
+RUN wget https://raw.githubusercontent.com/pote/gpm/v1.4.0/bin/gpm && chmod +x gpm && mv gpm /usr/local/bin
+RUN gpm install
+RUN cp -r ./github.com /github.com  # backup packages to root to prevent volume mount removing it
+
+# Install Go binaries that are utilised by the vim-go plugin:
+# https://github.com/fatih/vim-go/blob/master/plugin/go.vim#L9
+#
+# We don't manually install them, we let vim-go handle that
+# We use vim's `execute` command to pipe commands
+# This helps avoid "Press ENTER or type command to continue"
+RUN time vim -c "execute 'silent GoUpdateBinaries' | execute 'quit'"
 
 WORKDIR /go/src
