@@ -62,7 +62,7 @@ ENV TERM="xterm-256color"
 # SETUP VIM #
 #############
 # Grab my Vim config
-RUN git clone --recursive https://gitlab.cansurmeli.com/can/vim-config /home/python/.vim
+RUN git clone --recursive https://gitlab.cansurmeli.com/can/vim-config /home/go/.vim
 
 ####################
 # GO RELATED STUFF #
