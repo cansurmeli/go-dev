@@ -12,7 +12,7 @@ WORKDIR /tmp
 #
 #   Another option is `screen-256color` but the one with `xterm`
 # solves another issue with Vim colorscheme `onedark`.
-#ENV TERM="xterm-256color"
+ENV TERM="xterm-256color"
 
 # Update & install whatever is needed
 RUN dnf update -y
@@ -79,9 +79,13 @@ RUN git clone --recursive https://gitlab.cansurmeli.com/can/vim-config .vim
 ####################
 # GO RELATED STUFF #
 ####################
+# Create GOPATH location and have it acknowledged
+RUN mkdir /home/go/go
+ENV GOPATH="$HOME/go"
+RUN echo 'GOPATH="$HOME/go"' >> /home/go/.zshrc
 
-# WORKDIR /go/src
-# COPY ./Godeps /go/src
+# Bring over the dependencies required
+COPY ./Godeps /go/src/
 
 USER root
 RUN wget https://raw.githubusercontent.com/pote/gpm/v1.4.0/bin/gpm && chmod +x gpm && mv gpm /usr/local/bin
