@@ -1,13 +1,11 @@
 # README
 
-The development environment I use when developing a Go project.
+The Dockerised development environment I use when developing a Go project.
 
-It is Dockerised so that environment freezing in enabled by default and everything is isolated on a per project basis that specific dependencies are a breeze to define and nothing contradicts with another project.
+It is based on [this](https://www.integralist.co.uk/posts/dev-environments-within-docker-containers/) but I highly customised it to my needs.
+
+This environment should be used on a per-project basis. Meaning that each time you should clone a new copy of this environment repository and isolate everything in it.
 
 ## Why Docker?
 
-There are other options out there to enable environment freezing. However, I already use Docker a lot and like it pretty much. Hence, Docker.
-
-## What's Inside?
-
-I actually tried to keep it pretty simple. Besides a few installs, I grab Vim from the source. Thereafter, I add my own dotfiles for the CLI environment I am used to.
+There are/could be other tools out there for environment freeze and dependency management but I use Docker and I'm pretty comfortable with it. Plus, other adjustments besides configuring Go can be made. Hence, Docker.
